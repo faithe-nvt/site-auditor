@@ -159,6 +159,7 @@ export default function Home() {
                 Audit Report
                 {phase === 'done' && <span className="ml-2 text-xs text-green-600 font-normal">Complete</span>}
                 {phase === 'auditing' && <span className="ml-2 text-xs text-teal-600 font-normal animate-pulse">Writing...</span>}
+                <span className="ml-2 text-xs text-gray-400 font-mono">{report.length} chars</span>
               </span>
               {phase === 'done' && (
                 <button
@@ -170,6 +171,13 @@ export default function Home() {
               )}
             </div>
             <div ref={reportRef} className="px-6 py-6 overflow-y-auto max-h-[65vh] text-sm text-gray-700 leading-relaxed">
+              {/* DEBUG: raw fallback — remove once rendering is confirmed */}
+              {report.trim().length === 0 && (
+                <p className="text-red-500 text-xs font-mono">report state is empty or whitespace only ({report.length} chars)</p>
+              )}
+              {report.trim().length > 0 && report.trim().length < 200 && (
+                <pre className="text-xs text-red-500 font-mono whitespace-pre-wrap">[DEBUG raw]: {report}</pre>
+              )}
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
