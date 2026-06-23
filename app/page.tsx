@@ -169,15 +169,18 @@ export default function Home() {
                 </button>
               )}
             </div>
-            <div ref={reportRef} className="px-6 py-6 overflow-y-auto max-h-[65vh] prose prose-sm prose-gray max-w-none">
+            <div ref={reportRef} className="px-6 py-6 overflow-y-auto max-h-[65vh] text-sm text-gray-700 leading-relaxed">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
                   table: ({ children }) => (
                     <div className="overflow-x-auto my-4">
-                      <table className="min-w-full border-collapse text-xs">{children}</table>
+                      <table className="min-w-full border-collapse text-xs text-gray-700">{children}</table>
                     </div>
                   ),
+                  thead: ({ children }) => <thead>{children}</thead>,
+                  tbody: ({ children }) => <tbody>{children}</tbody>,
+                  tr: ({ children }) => <tr className="border-b border-gray-100">{children}</tr>,
                   th: ({ children }) => (
                     <th className="border border-gray-200 bg-gray-50 px-3 py-2 text-left font-semibold text-gray-700">{children}</th>
                   ),
@@ -190,15 +193,37 @@ export default function Home() {
                   h3: ({ children }) => (
                     <h3 className="text-sm font-semibold text-gray-800 mt-5 mb-2">{children}</h3>
                   ),
+                  h4: ({ children }) => (
+                    <h4 className="text-sm font-medium text-gray-800 mt-4 mb-1">{children}</h4>
+                  ),
+                  p: ({ children }) => (
+                    <p className="text-gray-700 mb-3 leading-relaxed">{children}</p>
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="list-disc list-outside ml-5 mb-3 space-y-1 text-gray-700">{children}</ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal list-outside ml-5 mb-3 space-y-1 text-gray-700">{children}</ol>
+                  ),
+                  li: ({ children }) => (
+                    <li className="text-gray-700 leading-relaxed">{children}</li>
+                  ),
+                  code: ({ children }) => (
+                    <code className="bg-gray-100 text-gray-800 px-1 py-0.5 rounded text-xs font-mono">{children}</code>
+                  ),
+                  blockquote: ({ children }) => (
+                    <blockquote className="border-l-4 border-gray-200 pl-4 text-gray-500 italic my-3">{children}</blockquote>
+                  ),
                   strong: ({ children }) => {
                     const text = String(children);
                     const cls = text.includes('Critical') ? 'text-red-700 font-semibold'
                       : text.includes('High') ? 'text-orange-600 font-semibold'
                       : text.includes('Medium') ? 'text-yellow-700 font-semibold'
                       : text.includes('Low') ? 'text-gray-500 font-semibold'
-                      : 'font-semibold';
+                      : 'text-gray-900 font-semibold';
                     return <strong className={cls}>{children}</strong>;
                   },
+                  hr: () => <hr className="border-gray-100 my-6" />,
                 }}
               >
                 {report}
